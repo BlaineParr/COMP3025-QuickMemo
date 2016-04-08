@@ -12,7 +12,8 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="ca.georgiancollege.quickmemo.MainActivity"
     tools:showIn="@layout/activity_main"
-    android:touchscreenBlocksFocus="false">
+    android:touchscreenBlocksFocus="false"
+    android:background="@android:color/holo_orange_dark">
 
     <LinearLayout
         android:orientation="horizontal"
