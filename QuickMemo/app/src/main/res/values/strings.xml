@@ -6,4 +6,5 @@
     <string name="finishedButtonString">Finished Tasks</string>
     <string name="newButtonString">Create Task</string>
     <string name="title_activity_create">CreateActivity</string>
+    <string name="title_activity_splash">SplashActivity</string>
 </resources>
