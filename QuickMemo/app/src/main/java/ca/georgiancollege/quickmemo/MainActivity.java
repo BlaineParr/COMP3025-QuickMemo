@@ -50,15 +50,6 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        /*FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });*/
-
         //initialize the arrayList and the buttons
         this.memos = new ArrayList<Memo>(0);
 
@@ -68,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
         this.contentLayout = (LinearLayout) findViewById(R.id.contentLayout);
 
         /*
-         * When the todayButton is clicked...
+         * This function displays the memos for today.
          */
         this.todayButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -78,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         /*
-         * When the allButton is clicked...
+         * This function displays all memos.
          */
         this.allButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -127,10 +118,14 @@ public class MainActivity extends AppCompatActivity {
         //clear contentLayout
         this.contentLayout.removeAllViews();
 
+        //get today's date as a String
         String today = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
 
+        //create an ArrayList to hold the memos to be displayed
         ArrayList<Memo> displayMemos = new ArrayList<Memo>(0);
 
+        //if ALL memos are to be displayed, directly copy the memos ArrayList
+        //if TODAY's memos are to be displayed, use a for loop to find ones with the correct date
         switch(sort) {
             case ALL: displayMemos = this.memos;
                 break;
@@ -142,6 +137,7 @@ public class MainActivity extends AppCompatActivity {
                 } //for ends
         } //switch ends
 
+        //for loop set up to display the information from each memo
         for(int i = 0; i < displayMemos.size(); i++) {
             //make a new linear layout
             LinearLayout l = new LinearLayout(this);
