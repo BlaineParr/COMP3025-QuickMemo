@@ -12,6 +12,7 @@ import android.widget.EditText;
 
 public class CreateActivity extends AppCompatActivity {
 
+    //instance variables
     Button submitButton;
 
     EditText titleEditText;
@@ -19,6 +20,9 @@ public class CreateActivity extends AppCompatActivity {
     EditText dateEditText;
     EditText descriptionEditText;
 
+    /*
+     * This method...
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,6 +39,7 @@ public class CreateActivity extends AppCompatActivity {
             }
         });*/
 
+        //Initialize variables
         titleEditText = (EditText) findViewById(R.id.titleEditText);
         categoryEditText = (EditText) findViewById(R.id.categoryEditText);
         dateEditText = (EditText) findViewById(R.id.dateEditText);
@@ -57,6 +62,5 @@ public class CreateActivity extends AppCompatActivity {
                 finish();
             } //method onClick ends
         });
-    }
-
-}
+    } //method onCreate ends
+} //class CreateActivity ends

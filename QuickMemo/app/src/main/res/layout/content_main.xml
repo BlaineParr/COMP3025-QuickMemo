@@ -13,7 +13,8 @@
     tools:context="ca.georgiancollege.quickmemo.MainActivity"
     tools:showIn="@layout/activity_main"
     android:touchscreenBlocksFocus="false"
-    android:background="@android:color/holo_orange_dark">
+    android:background="@android:color/holo_orange_dark"
+    android:id="@+id/MainLayout">
 
     <LinearLayout
         android:orientation="horizontal"
