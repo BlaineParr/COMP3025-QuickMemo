@@ -9,6 +9,7 @@
 package ca.georgiancollege.quickmemo;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -17,6 +18,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.LinearLayout.LayoutParams;
+import android.widget.TableLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -26,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
     //instance variables
     private Button todayButton;
     private Button newButton;
-    private LinearLayout mainLayout;
+    private LinearLayout contentLayout;
 
     private ArrayList<Memo> memos;
 
@@ -54,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
 
         this.todayButton = (Button) findViewById(R.id.todayButton);
         this.newButton = (Button) findViewById(R.id.newButton);
-        this.mainLayout = (LinearLayout) findViewById(R.id.MainLayout);
+        this.contentLayout = (LinearLayout) findViewById(R.id.contentLayout);
 
         /*
          * When the todayButton is clicked...
@@ -100,22 +103,57 @@ public class MainActivity extends AppCompatActivity {
     } //method onActivityResult ends
 
     private void displayMemos() {
+        this.contentLayout.removeAllViews();
+
         for(int i = 0; i < this.memos.size(); i++) {
             //make a new linear layout
             LinearLayout l = new LinearLayout(this);
 
-            //orientation is horizontal
+            //set up linear layout
             l.setOrientation(LinearLayout.HORIZONTAL);
+            l.setBackgroundColor(Color.DKGRAY);
+            LayoutParams lParams = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
+            l.setLayoutParams(lParams);
 
-            LinearLayout.LayoutParams lParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+            //set up the title text view
+            TextView titleTextView = new TextView(this);
+            titleTextView.setTextColor(Color.WHITE);
+            titleTextView.setText(this.memos.get(i).getTitle());
+            titleTextView.setLayoutParams(new LayoutParams(0, LayoutParams.WRAP_CONTENT, 1f));
 
-            TextView textView = new TextView(this);
+            //set up the date textView
+            TextView dateTextView = new TextView(this);
+            dateTextView.setTextColor(Color.WHITE);
+            dateTextView.setText(this.memos.get(i).getDate());
+            dateTextView.setLayoutParams(new LayoutParams(0, LayoutParams.WRAP_CONTENT, 1f));
 
-            textView.setText(this.memos.get(i).getTitle());
+            //add the textViews
+            l.addView(titleTextView);
+            l.addView(dateTextView);
 
-            l.addView(textView);
+            LinearLayout l2 = new LinearLayout(this);
 
-            this.mainLayout.addView(l);
+            l2.setOrientation(LinearLayout.HORIZONTAL);
+            l2.setBackgroundColor(Color.WHITE);
+            l2.setLayoutParams(lParams);
+
+            //set up the category text view
+            TextView categoryTextView = new TextView(this);
+            categoryTextView.setTextColor(Color.BLACK);
+            categoryTextView.setText(this.memos.get(i).getCategory());
+            categoryTextView.setLayoutParams(new LayoutParams(0, LayoutParams.WRAP_CONTENT, 1f));
+
+            //set up the description text view
+            TextView descriptionTextView = new TextView(this);
+            descriptionTextView.setTextColor(Color.BLACK);
+            descriptionTextView.setText(this.memos.get(i).getDescription());
+            descriptionTextView.setLayoutParams(new LayoutParams(0, LayoutParams.WRAP_CONTENT, 1f));
+
+            l2.addView(categoryTextView);
+            l2.addView(descriptionTextView);
+
+            this.contentLayout.addView(l);
+            this.contentLayout.addView(l2);
         } //for ends
     } //method displayMemos ends
 } //class MainActivity ends
