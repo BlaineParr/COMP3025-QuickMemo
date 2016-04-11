@@ -16,6 +16,13 @@ public class Memo
         this._description = "";
     } //constructor ends
 
+    public Memo(String title, String category, String description)
+    {
+        this._title = title;
+        this._category = category;
+        this._description = description;
+    } //constructor ends
+
     public String getTitle()
     {
         return this._title;

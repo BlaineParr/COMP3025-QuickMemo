@@ -9,6 +9,8 @@ import android.view.View;
 
 public class CreateActivity extends AppCompatActivity {
 
+    public Memo memo;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

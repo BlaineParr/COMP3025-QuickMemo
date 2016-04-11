@@ -1,10 +1,16 @@
 <resources>
     <string name="app_name">QuickMemo</string>
     <string name="action_settings">Settings</string>
-    <string name="todayButtonString">Today\'s Tasks</string>
-    <string name="allButtonString">All Tasks</string>
-    <string name="finishedButtonString">Finished Tasks</string>
-    <string name="newButtonString">Create Task</string>
+    <string name="todayButtonString">Today</string>
+    <string name="allButtonString">All</string>
+    <string name="finishedButtonString">Done</string>
+    <string name="newButtonString">New</string>
     <string name="title_activity_create">CreateActivity</string>
     <string name="title_activity_splash">SplashActivity</string>
+    <string name="titleEditTextString">Enter a title</string>
+    <string name="titleTextViewString">Title</string>
+    <string name="categoryTextViewString">Category</string>
+    <string name="categoryEditTextString">Enter a category</string>
+    <string name="descriptionEditTextString">Enter a description</string>
+    <string name="descriptionTextViewString">Description</string>
 </resources>
