@@ -22,12 +22,19 @@ import android.widget.LinearLayout.LayoutParams;
 import android.widget.TableLayout;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
 
+    //constants
+    final int ALL = 0;
+    final int TODAY = 1;
+
     //instance variables
     private Button todayButton;
+    private Button allButton;
     private Button newButton;
     private LinearLayout contentLayout;
 
@@ -56,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
         this.memos = new ArrayList<Memo>(0);
 
         this.todayButton = (Button) findViewById(R.id.todayButton);
+        this.allButton = (Button) findViewById(R.id.allButton);
         this.newButton = (Button) findViewById(R.id.newButton);
         this.contentLayout = (LinearLayout) findViewById(R.id.contentLayout);
 
@@ -65,7 +73,17 @@ public class MainActivity extends AppCompatActivity {
         this.todayButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d("QuickMemo", memos.get(0).getDescription());
+                displayMemos(TODAY);
+            } //method onClick ends
+        });
+
+        /*
+         * When the allButton is clicked...
+         */
+        this.allButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                displayMemos(ALL);
             } //method onClick ends
         });
 
@@ -99,13 +117,32 @@ public class MainActivity extends AppCompatActivity {
             this.memos.add(new Memo(data.getExtras().get("title").toString(), data.getExtras().get("category").toString(), data.getExtras().get("date").toString(), data.getExtras().get("description").toString()));
         } //if ends
 
-        this.displayMemos();
+        this.displayMemos(ALL);
     } //method onActivityResult ends
 
-    private void displayMemos() {
+    /*
+     * This method displays the users' entered memos
+     */
+    private void displayMemos(int sort) {
+        //clear contentLayout
         this.contentLayout.removeAllViews();
 
-        for(int i = 0; i < this.memos.size(); i++) {
+        String today = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+
+        ArrayList<Memo> displayMemos = new ArrayList<Memo>(0);
+
+        switch(sort) {
+            case ALL: displayMemos = this.memos;
+                break;
+            case TODAY:
+                for(int i = 0; i < this.memos.size(); i++) {
+                    if(this.memos.get(i).getDate().equals(today)) {
+                        displayMemos.add(this.memos.get(i));
+                    } //if ends
+                } //for ends
+        } //switch ends
+
+        for(int i = 0; i < displayMemos.size(); i++) {
             //make a new linear layout
             LinearLayout l = new LinearLayout(this);
 
@@ -118,40 +155,44 @@ public class MainActivity extends AppCompatActivity {
             //set up the title text view
             TextView titleTextView = new TextView(this);
             titleTextView.setTextColor(Color.WHITE);
-            titleTextView.setText(this.memos.get(i).getTitle());
+            titleTextView.setText(displayMemos.get(i).getTitle());
             titleTextView.setLayoutParams(new LayoutParams(0, LayoutParams.WRAP_CONTENT, 1f));
 
             //set up the date textView
             TextView dateTextView = new TextView(this);
             dateTextView.setTextColor(Color.WHITE);
-            dateTextView.setText(this.memos.get(i).getDate());
+            dateTextView.setText(displayMemos.get(i).getDate());
             dateTextView.setLayoutParams(new LayoutParams(0, LayoutParams.WRAP_CONTENT, 1f));
 
             //add the textViews
             l.addView(titleTextView);
             l.addView(dateTextView);
 
+            //create another LinearLayout
             LinearLayout l2 = new LinearLayout(this);
 
+            //set up the LinearLayout
             l2.setOrientation(LinearLayout.HORIZONTAL);
             l2.setBackgroundColor(Color.WHITE);
             l2.setLayoutParams(lParams);
 
-            //set up the category text view
+            //set up the categoryTextView
             TextView categoryTextView = new TextView(this);
             categoryTextView.setTextColor(Color.BLACK);
-            categoryTextView.setText(this.memos.get(i).getCategory());
+            categoryTextView.setText(displayMemos.get(i).getCategory());
             categoryTextView.setLayoutParams(new LayoutParams(0, LayoutParams.WRAP_CONTENT, 1f));
 
-            //set up the description text view
+            //set up the descriptionTextView
             TextView descriptionTextView = new TextView(this);
             descriptionTextView.setTextColor(Color.BLACK);
-            descriptionTextView.setText(this.memos.get(i).getDescription());
+            descriptionTextView.setText(displayMemos.get(i).getDescription());
             descriptionTextView.setLayoutParams(new LayoutParams(0, LayoutParams.WRAP_CONTENT, 1f));
 
+            //add the textViews
             l2.addView(categoryTextView);
             l2.addView(descriptionTextView);
 
+            //add the LinearLayouts to contentLayout
             this.contentLayout.addView(l);
             this.contentLayout.addView(l2);
         } //for ends
