@@ -56,11 +56,12 @@
         android:id="@+id/titleTextViewRowLinearLayout">
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="@string/titleTextViewString"
-            android:id="@+id/titleTextView" />
+            android:id="@+id/titleTextView"
+            android:layout_weight="1" />
     </LinearLayout>
 
     <LinearLayout
@@ -94,7 +95,7 @@
         android:id="@+id/categoryTextViewLinearLayout">
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="@string/categoryTextViewString"
@@ -109,7 +110,7 @@
         android:id="@+id/categoryEditTextLinearLayout">
 
         <EditText
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:id="@+id/categoryEditText"
             android:text="@string/categoryEditTextString"
@@ -128,10 +129,41 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:id="@+id/dateTextViewLinearLayout">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="@string/dateTextViewString"
+            android:id="@+id/dateTextView"
+            android:layout_weight="1" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/dateEditTextLinearLayout">
+
+        <EditText
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:inputType="date"
+            android:ems="10"
+            android:id="@+id/dateEditText"
+            android:layout_weight="1"
+            android:text="@string/dateEditTextString" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:id="@+id/descriptionTextViewLinearLayout">
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="@string/descriptionTextViewString"
@@ -146,12 +178,25 @@
         android:id="@+id/descriptionEditTextLinearLayout">
 
         <EditText
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:inputType="textMultiLine"
             android:ems="10"
             android:id="@+id/descriptionEditText"
             android:layout_weight="1"
             android:text="@string/descriptionEditTextString" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/submitButtonLinearLayout">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/submitButtonString"
+            android:id="@+id/submitButton" />
     </LinearLayout>
 </LinearLayout>

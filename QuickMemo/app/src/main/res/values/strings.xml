@@ -13,4 +13,7 @@
     <string name="categoryEditTextString">Enter a category</string>
     <string name="descriptionEditTextString">Enter a description</string>
     <string name="descriptionTextViewString">Description</string>
+    <string name="submitButtonString">Submit</string>
+    <string name="dateTextViewString">Date</string>
+    <string name="dateEditTextString">Enter a date</string>
 </resources>

@@ -7,19 +7,22 @@ public class Memo
 {
     private String _title;
     private String _category;
+    private String _date;
     private String _description;
 
     public Memo()
     {
         this._title = "";
         this._category = "";
+        this._date = "";
         this._description = "";
     } //constructor ends
 
-    public Memo(String title, String category, String description)
+    public Memo(String title, String category, String date, String description)
     {
         this._title = title;
         this._category = category;
+        this._date = date;
         this._description = description;
     } //constructor ends
 
@@ -31,6 +34,11 @@ public class Memo
     public String getCategory()
     {
         return this._category;
+    } //method getCategory ends
+
+    public String getDate()
+    {
+        return this._date;
     } //method getCategory ends
 
     public String getDescription()
@@ -47,6 +55,11 @@ public class Memo
     {
         this._category = category;
     } //method setCategory ends
+
+    public void setDate(String date)
+    {
+        this._date = date;
+    } //method setDate ends
 
     public void setDescription(String description)
     {

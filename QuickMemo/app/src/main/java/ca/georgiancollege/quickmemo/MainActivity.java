@@ -37,13 +37,15 @@ public class MainActivity extends AppCompatActivity {
             }
         });*/
 
+        this.memos = new ArrayList<Memo>(0);
+
         this.todayButton = (Button) findViewById(R.id.todayButton);
         this.newButton = (Button) findViewById(R.id.newButton);
 
         this.todayButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d("QuickMemo", "Today Button was clicked!");
+                Log.d("QuickMemo", memos.get(0).getDescription());
             } //method onClick ends
         });
 
@@ -51,10 +53,20 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(getApplicationContext(), CreateActivity.class);
-                startActivity(i);
+                startActivityForResult(i, 100);
             } //method onClick ends
         });
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(resultCode == 100) {
+            Log.d("QuickMemo", data.getExtras().get("title").toString());
+            this.memos.add(new Memo(data.getExtras().get("title").toString(), data.getExtras().get("category").toString(), data.getExtras().get("date").toString(), data.getExtras().get("description").toString()));
+        } //if ends
+    } //method onActivityResult ends
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
