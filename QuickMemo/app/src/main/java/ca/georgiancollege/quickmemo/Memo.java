@@ -9,6 +9,7 @@ public class Memo
     private String _category;
     private String _date;
     private String _description;
+    private boolean _isDone;
 
     public Memo()
     {
@@ -16,6 +17,7 @@ public class Memo
         this._category = "";
         this._date = "";
         this._description = "";
+        this._isDone = false;
     } //constructor ends
 
     public Memo(String title, String category, String date, String description)
@@ -24,6 +26,7 @@ public class Memo
         this._category = category;
         this._date = date;
         this._description = description;
+        this._isDone = false;
     } //constructor ends
 
     public String getTitle()
@@ -46,6 +49,11 @@ public class Memo
         return this._description;
     } //method getDescription ends
 
+    public boolean getIsDone()
+    {
+        return this._isDone;
+    } //method getIsDone ends
+
     public void setTitle(String title)
     {
         this._title = title;
@@ -65,4 +73,9 @@ public class Memo
     {
         this._description = description;
     } //method setDescription ends
+
+    public void setIsDone(boolean isDone)
+    {
+        this._isDone = isDone;
+    } //method setIsDone ends
 } //class Memo ends

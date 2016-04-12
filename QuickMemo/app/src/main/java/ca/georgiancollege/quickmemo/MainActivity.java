@@ -1,7 +1,7 @@
 /*
  * Quick Memo
  * By: Blaine Parr, Richard Estrada and Cody Hutchinson
- * Date Last Edited: April 11, 2016
+ * Date Last Edited: April 12, 2016
  * Last Edited By: Blaine Parr
  * Description: This application displays tasks/memos entered by the user. The user can view tasks
  * for today, completed tasks and all tasks.
@@ -15,11 +15,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
-import android.widget.TableLayout;
 import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
@@ -31,14 +29,17 @@ public class MainActivity extends AppCompatActivity {
     //constants
     final int ALL = 0;
     final int TODAY = 1;
+    final int DONE = 2;
 
     //instance variables
     private Button todayButton;
     private Button allButton;
+    private Button doneButton;
     private Button newButton;
     private LinearLayout contentLayout;
 
     private ArrayList<Memo> memos;
+    private ArrayList<Memo> shownMemos;
 
     /*
      * This method runs when the app is started. It sets up the app and all of its components.
@@ -50,11 +51,13 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        //initialize the arrayList and the buttons
+        //initialize the arrayLists and the buttons
         this.memos = new ArrayList<Memo>(0);
+        this.shownMemos = new ArrayList<Memo>(0);
 
         this.todayButton = (Button) findViewById(R.id.todayButton);
         this.allButton = (Button) findViewById(R.id.allButton);
+        this.doneButton = (Button) findViewById(R.id.doneButton);
         this.newButton = (Button) findViewById(R.id.newButton);
         this.contentLayout = (LinearLayout) findViewById(R.id.contentLayout);
 
@@ -75,6 +78,16 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 displayMemos(ALL);
+            } //method onClick ends
+        });
+
+        /*
+         * This function displays finished memos.
+         */
+        this.doneButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                displayMemos(DONE);
             } //method onClick ends
         });
 
@@ -115,30 +128,44 @@ public class MainActivity extends AppCompatActivity {
      * This method displays the users' entered memos
      */
     private void displayMemos(int sort) {
+        Log.d("QuickMemo", "Made it here");
         //clear contentLayout
         this.contentLayout.removeAllViews();
+        this.shownMemos.clear();
 
         //get today's date as a String
         String today = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
 
         //create an ArrayList to hold the memos to be displayed
-        ArrayList<Memo> displayMemos = new ArrayList<Memo>(0);
+        //this.shownMemos = new ArrayList<Memo>(0);
 
         //if ALL memos are to be displayed, directly copy the memos ArrayList
         //if TODAY's memos are to be displayed, use a for loop to find ones with the correct date
+        //if DONE memos are to be displayed, use a for loop to find which ones are done
         switch(sort) {
-            case ALL: displayMemos = this.memos;
+            case ALL: this.shownMemos = new ArrayList<Memo>(this.memos);
+                Log.d("QuickMemo", "Made it here 2");
                 break;
             case TODAY:
+                Log.d("QuickMemo", "Made it here 3");
                 for(int i = 0; i < this.memos.size(); i++) {
                     if(this.memos.get(i).getDate().equals(today)) {
-                        displayMemos.add(this.memos.get(i));
+                        this.shownMemos.add(this.memos.get(i));
+                    } //if ends
+                } //for ends
+                break;
+            case DONE:
+                for(int i = 0; i < this.memos.size(); i++) {
+                    if(this.memos.get(i).getIsDone()) {
+                        shownMemos.add(this.memos.get(i));
                     } //if ends
                 } //for ends
         } //switch ends
 
         //for loop set up to display the information from each memo
-        for(int i = 0; i < displayMemos.size(); i++) {
+        for(int i = 0; i < this.shownMemos.size(); i++) {
+            final int j = i;
+
             //make a new linear layout
             LinearLayout l = new LinearLayout(this);
 
@@ -151,13 +178,13 @@ public class MainActivity extends AppCompatActivity {
             //set up the title text view
             TextView titleTextView = new TextView(this);
             titleTextView.setTextColor(Color.WHITE);
-            titleTextView.setText(displayMemos.get(i).getTitle());
+            titleTextView.setText(this.shownMemos.get(i).getTitle());
             titleTextView.setLayoutParams(new LayoutParams(0, LayoutParams.WRAP_CONTENT, 1f));
 
             //set up the date textView
             TextView dateTextView = new TextView(this);
             dateTextView.setTextColor(Color.WHITE);
-            dateTextView.setText(displayMemos.get(i).getDate());
+            dateTextView.setText(this.shownMemos.get(i).getDate());
             dateTextView.setLayoutParams(new LayoutParams(0, LayoutParams.WRAP_CONTENT, 1f));
 
             //add the textViews
@@ -175,22 +202,59 @@ public class MainActivity extends AppCompatActivity {
             //set up the categoryTextView
             TextView categoryTextView = new TextView(this);
             categoryTextView.setTextColor(Color.BLACK);
-            categoryTextView.setText(displayMemos.get(i).getCategory());
+            categoryTextView.setText(this.shownMemos.get(i).getCategory());
             categoryTextView.setLayoutParams(new LayoutParams(0, LayoutParams.WRAP_CONTENT, 1f));
 
             //set up the descriptionTextView
             TextView descriptionTextView = new TextView(this);
             descriptionTextView.setTextColor(Color.BLACK);
-            descriptionTextView.setText(displayMemos.get(i).getDescription());
+            descriptionTextView.setText(this.shownMemos.get(i).getDescription());
             descriptionTextView.setLayoutParams(new LayoutParams(0, LayoutParams.WRAP_CONTENT, 1f));
 
             //add the textViews
             l2.addView(categoryTextView);
             l2.addView(descriptionTextView);
 
+            //create a third LinearLayout
+            LinearLayout l3 = new LinearLayout(this);
+
+            //set up the LinearLayout
+            l3.setOrientation(LinearLayout.HORIZONTAL);
+            l3.setBackgroundColor(Color.WHITE);
+            l3.setLayoutParams(lParams);
+
+            if(!shownMemos.get(i).getIsDone()) {
+                Button finishMemoButton = new Button(this);
+                finishMemoButton.setText("Finish");
+
+                finishMemoButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        memos.get(memos.indexOf(shownMemos.get(j))).setIsDone(true);
+                        displayMemos(ALL);
+                    } //method onClick ends
+                });
+
+                l3.addView(finishMemoButton);
+            } //if ends
+
+            Button deleteMemoButton = new Button(this);
+            deleteMemoButton.setText("Delete");
+
+            deleteMemoButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    memos.remove(memos.indexOf(shownMemos.get(j)));
+                    displayMemos(ALL);
+                } //method onClick ends
+            });
+
+            l3.addView(deleteMemoButton);
+
             //add the LinearLayouts to contentLayout
             this.contentLayout.addView(l);
             this.contentLayout.addView(l2);
+            this.contentLayout.addView(l3);
         } //for ends
     } //method displayMemos ends
 } //class MainActivity ends
